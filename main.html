@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFMA AMC 8 Team Mock — June 2026</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:       #0B1F45;
+  --navy2:      #163272;
+  --blue:       #3B82F6;
+  --blue-lt:    #EFF6FF;
+  --blue-mid:   #93C5FD;
+  --green:      #16A34A;
+  --green-bg:   #F0FDF4;
+  --green-bd:   #86EFAC;
+  --red:        #DC2626;
+  --red-bg:     #FEF2F2;
+  --red-bd:     #FCA5A5;
+  --amber:      #D97706;
+  --gray-50:    #F8FAFC;
+  --gray-100:   #F1F5F9;
+  --gray-200:   #E2E8F0;
+  --gray-300:   #CBD5E1;
+  --gray-400:   #94A3B8;
+  --gray-500:   #64748B;
+  --gray-700:   #334155;
+  --gray-900:   #0F172A;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #E8EDF5;
+  background-image: radial-gradient(#C4CDD8 1px, transparent 1px);
+  background-size: 22px 22px;
+  min-height: 100vh;
+  color: var(--gray-900);
+}
+
+/* ── Header ── */
+.site-header {
+  background: linear-gradient(145deg, #070F24 0%, #0B1F45 45%, #142F6B 100%);
+  color: #fff;
+  padding: 52px 20px 46px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(255,255,255,0.015) 40px,
+    rgba(255,255,255,0.015) 80px
+  );
+}
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--blue-mid);
+  margin-bottom: 14px;
+  position: relative;
+}
+.site-header h1 {
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  position: relative;
+}
+.sub-line {
+  font-size: 14px;
+  color: #93AEED;
+  margin-bottom: 28px;
+  position: relative;
+}
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 22px;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.22);
+  border-radius: 9px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background .15s;
+  position: relative;
+  backdrop-filter: blur(4px);
+}
+.pdf-btn:hover { background: rgba(255,255,255,.16); }
+
+/* ── Sticky progress bar ── */
+.sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 10px 20px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+}
+.sticky-inner { max-width: 780px; margin: 0 auto; }
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-500);
+  margin-bottom: 7px;
+}
+.progress-track {
+  height: 5px;
+  background: var(--gray-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+  transition: width .35s ease;
+  width: 0%;
+}
+
+/* ── Main container ── */
+.main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 16px 64px;
+}
+
+/* ── Results panel ── */
+.results-panel {
+  display: none;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--gray-200);
+  padding: 36px 28px 32px;
+  text-align: center;
+  margin-bottom: 28px;
+  box-shadow: 0 6px 28px rgba(0,0,0,.07);
+}
+.results-panel.show { display: block; animation: fadeUp .45s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ring-wrap {
+  width: 136px; height: 136px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+.ring-wrap svg { transform: rotate(-90deg); }
+.ring-bg  { fill: none; stroke: var(--gray-100); stroke-width: 11; }
+.ring-fg  { fill: none; stroke: var(--green); stroke-width: 11; stroke-linecap: round;
+            stroke-dasharray: 358.1; stroke-dashoffset: 358.1;
+            transition: stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1),
+                        stroke .4s ease; }
+.ring-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.ring-score {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 34px; font-weight: 600;
+  color: var(--navy); line-height: 1;
+}
+.ring-denom { font-size: 12px; color: var(--gray-400); margin-top: 3px; }
+.result-headline { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.result-sub      { font-size: 14px; color: var(--gray-500); }
+
+/* ── Question card ── */
+.q-card {
+  background: #fff;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin-bottom: 10px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.q-card.has-pick { border-color: #93C5FD; }
+.q-card.correct  { border-color: var(--green-bd); background: var(--green-bg); }
+.q-card.wrong    { border-color: var(--red-bd);   background: var(--red-bg); }
+
+.q-head {
+  display: flex; gap: 14px; align-items: flex-start;
+  margin-bottom: 16px;
+}
+.q-num {
+  flex-shrink: 0; width: 30px; height: 30px;
+  background: var(--navy); color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; font-weight: 600;
+  margin-top: 2px;
+}
+.correct .q-num { background: var(--green); }
+.wrong   .q-num { background: var(--red); }
+
+.q-text {
+  font-size: 15.5px; line-height: 1.7;
+  color: var(--gray-900); flex: 1;
+}
+.q-note {
+  font-size: 12.5px; color: var(--gray-500);
+  font-style: italic; margin-top: 5px;
+}
+
+/* ── Choice buttons ── */
+.choices {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-left: 44px;
+}
+.choice-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 15px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  background: #fff; color: var(--gray-900);
+  font-family: 'Inter', sans-serif; font-size: 14px;
+  cursor: pointer; transition: all .12s;
+  white-space: nowrap;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-lt); }
+.choice-btn.selected  { border-color: var(--blue); background: var(--blue-lt); color: #1D4ED8; font-weight: 600; }
+.choice-btn.is-correct { border-color: var(--green); background: #DCFCE7; color: #15803D; font-weight: 600; }
+.choice-btn.is-wrong   { border-color: var(--red);   background: #FEE2E2; color: #B91C1C; font-weight: 600; }
+.choice-btn:disabled { cursor: default; }
+
+.choice-ltr {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px; font-weight: 600;
+  color: var(--gray-400); line-height: 1; flex-shrink: 0;
+}
+.choice-btn.selected  .choice-ltr,
+.choice-btn.is-correct .choice-ltr,
+.choice-btn.is-wrong   .choice-ltr { color: inherit; opacity: .7; }
+
+/* ── Feedback ── */
+.q-feedback {
+  display: none; margin-top: 11px; margin-left: 44px;
+  font-size: 13px; font-weight: 500;
+}
+.q-feedback.show { display: block; }
+.fb-ok   { color: var(--green); }
+.fb-bad  { color: var(--red); }
+.fb-skip { color: var(--amber); }
+
+/* ── Submit / Reset ── */
+.action-wrap { text-align: center; padding: 32px 0 8px; }
+.btn-primary {
+  padding: 15px 52px;
+  background: linear-gradient(135deg, #0B1F45, #163272);
+  color: #fff; border: none; border-radius: 10px;
+  font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(11,31,69,.32);
+  transition: transform .1s, box-shadow .15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11,31,69,.42); }
+.btn-primary:active { transform: none; }
+.btn-primary:disabled { opacity: .55; cursor: default; transform: none; box-shadow: none; }
+
+.btn-reset {
+  display: none;
+  margin-top: 14px;
+  padding: 10px 28px;
+  background: transparent;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+  color: var(--gray-600, #4B5563);
+  cursor: pointer; transition: background .12s;
+}
+.btn-reset:hover { background: var(--gray-100); }
+.btn-reset.show { display: inline-block; }
+
+@media (max-width: 480px) {
+  .choices    { margin-left: 0; }
+  .q-feedback { margin-left: 0; }
+  .site-header { padding: 38px 16px 34px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="eyebrow">San Francisco Math Academy &middot; June 2026</div>
+  <h1>AMC&thinsp;8 Team Mock</h1>
+  <div class="sub-line">30 questions &middot; Multiple choice</div>
+  <a href="https://drive.google.com/file/d/1GlR5lYmBn8XH-pzecTiaYF-nqwD6LCx1/view?usp=sharing"
+     target="_blank" rel="noopener" class="pdf-btn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+    </svg>
+    View Problem Set PDF
+  </a>
+</header>
+
+<div class="sticky-bar">
+  <div class="sticky-inner">
+    <div class="progress-row">
+      <span>Progress</span>
+      <span id="prog-txt">0 / 30 answered</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="results-panel" id="results">
+    <div class="ring-wrap">
+      <svg width="136" height="136" viewBox="0 0 136 136">
+        <circle class="ring-bg" cx="68" cy="68" r="57"/>
+        <circle class="ring-fg" id="ring-fg" cx="68" cy="68" r="57"/>
+      </svg>
+      <div class="ring-overlay">
+        <div class="ring-score" id="ring-score">0</div>
+        <div class="ring-denom">out of 30</div>
+      </div>
+    </div>
+    <div class="result-headline" id="res-headline">Results</div>
+    <div class="result-sub" id="res-sub"></div>
+  </div>
+
+  <div id="q-container"></div>
+
+  <div class="action-wrap">
+    <button class="btn-primary" id="btn-submit" onclick="submitQuiz()">Submit Answers</button>
+    <br>
+    <button class="btn-reset" id="btn-reset" onclick="resetQuiz()">&#8635; Try Again</button>
+  </div>
+
+</div>
+
+<script>
+/* ── Answer key ── */
+const KEY = {
+  1:'d', 2:'c', 3:'d', 4:'b', 5:'a',
+  6:'b', 7:'c', 8:'d', 9:'e', 10:'c',
+  11:'d', 12:'c', 13:'b', 14:'a', 15:'c',
+  16:'d', 17:'a', 18:'d', 19:'c', 20:'e',
+  21:'e', 22:'d', 23:'a', 24:'e', 25:'a',
+  26:'b', 27:'b', 28:'d', 29:'d', 30:'c'
+};
+
+const LTRS = ['a','b','c','d','e'];
+let picks = {};
+let submitted = false;
+
+/* ── Question data ── */
+const Qs = [
+  { n:1,
+    t:'What is the value of the sum \\(1+2+3+\\cdots+10\\)?',
+    c:['45','48','50','55','66'] },
+  { n:2,
+    t:'\\(40\\%\\) of a number is 20. What is \\(30\\%\\) of the same number?',
+    c:['10','12','15','16','18'] },
+  { n:3,
+    t:'In the figure below, square C rests on square B and square B rests on square A. Squares A, B, and C have side lengths 3, 2, and 1, respectively. What is the perimeter of the figure?',
+    c:['10','12','15','18','24'],
+    note:'See the PDF for the figure.' },
+  { n:4,
+    t:'On Monday, Sara read 6 books. On Tuesday, she read half as many books as she read on Monday, and on Wednesday, she read 5 more books than Tuesday. How many books did she read from Monday to Wednesday?',
+    c:['16','17','18','19','20'] },
+  { n:5,
+    t:'Alice, Bethany, and Chelsea are sharing a pizza. Alice ate \\(\\dfrac{2}{7}\\) of the pizza and Bethany ate twice as much as Alice. Chelsea ate the rest. What fraction of the pizza did Chelsea eat?',
+    c:['\\(\\dfrac{1}{7}\\)','\\(\\dfrac{3}{14}\\)','\\(\\dfrac{2}{7}\\)','\\(\\dfrac{5}{14}\\)','\\(\\dfrac{3}{7}\\)'] },
+  { n:6,
+    t:'Frank the frog starts at 0, then hops 2 units right, 5 units right, 4 units left, 10 units right, and finally 16 units left. What number is Frank on?',
+    c:['\\(-5\\)','\\(-3\\)','\\(1\\)','\\(5\\)','\\(7\\)'] },
+  { n:7,
+    t:'What is the sum of the first 6 perfect squares that are greater than 0?',
+    c:['76','85','91','93','94'] },
+  { n:8,
+    t:'How many numbers between 1 and 100 are divisible by 3?',
+    c:['30','31','32','33','34'] },
+  { n:9,
+    t:'\\(a \\boxtimes b = \\dfrac{a \\cdot b}{a+b}\\). What is \\(15 \\boxtimes 10\\,\\)?',
+    c:['\\(\\dfrac{1}{6}\\)','\\(\\dfrac{1}{5}\\)','\\(5\\)','\\(\\dfrac{28}{5}\\)','\\(6\\)'] },
+  { n:10,
+    t:'A bookstore sells books for $9 each. On Monday all books except fantasy were on sale for $8 each. Maya spent $81 total. If Maya bought fewer than 9 fantasy books, how many books did she buy in total?',
+    c:['8','9','10','11','12'] },
+  { n:11,
+    t:'A taxi ride costs $3 for the first 5 miles, then $0.50 for every mile after that. How much does a 13-mile taxi ride cost?',
+    c:['$3','$4','$6.50','$7','$13'] },
+  { n:12,
+    t:'A hotdog stand offers 2 types of buns, 3 types of meat, and 3 types of sauces. How many distinct hotdogs are possible if you choose 1 bun, 1 meat, and 1 sauce?',
+    c:['6','12','18','20','24'] },
+  { n:13,
+    t:'An animal shelter has 20 cats. Each cat has long or short fur, and blue or green eyes. Half the cats have long fur, and \\(\\dfrac{2}{5}\\) have green eyes. 4 cats have both long fur and green eyes. How many cats have short fur and blue eyes?',
+    c:['5','6','7','8','9'] },
+  { n:14,
+    t:'What is the remainder when \\(8 \\cdot 15 \\cdot 29\\) is divided by 7?',
+    c:['1','2','3','5','6'] },
+  { n:15,
+    t:'Bella baked 10 tarts, each costing $3 to make. She sold them all and made a total profit of $35. How much did she sell each tart for?',
+    c:['$6.00','$6.25','$6.50','$7.00','$7.50'] },
+  { n:16,
+    t:'In the land of Or, 5 \\(xor\\)\'s can be exchanged for 3 \\(yor\\)\'s, and 10 \\(yor\\)\'s can be exchanged for 13 \\(zor\\)\'s. How many \\(xor\\)\'s can be exchanged for 39 \\(zor\\)\'s?',
+    c:['18','25','30','50','58'] },
+  { n:17,
+    t:'A leap year is divisible by 4, but not by 100, unless also by 400. How many leap years are there between 2023 and 2500, inclusive? (e.g. 1900 is not a leap year; 2000 and 2016 are.)',
+    c:['116','117','118','119','120'] },
+  { n:18,
+    t:'When a class is seated in rows of 5, there are 3 students left over. In rows of 7, there are 5 left over. What is the smallest possible number of students?',
+    c:['19','23','26','33','68'] },
+  { n:19,
+    t:'A candy factory produces 200 chocolates and 150 jelly beans in 2 hours. In 4 hours, it produces 200 chocolates and 370 jelly beans. Assuming constant rates, how many jelly beans does it produce per hour?',
+    c:['100','105','110','120','135'] },
+  { n:20,
+    t:'At the start of a road trip Madeline has 15 gallons of gas. \\(\\dfrac{3}{5}\\) of the way through, she has 13.5 gallons left. If her car gets exactly 30 miles per gallon, how long is the entire trip?',
+    c:['275','300','330','350','375'] },
+  { n:21,
+    t:'A palindrome reads the same forwards and backwards (e.g. 2002 is a palindrome, 2001 is not). How many 3-digit palindromes are there?',
+    c:['63','80','81','85','90'] },
+  { n:22,
+    t:'A number \\(N\\) is 5 more than a positive multiple of 3, and \\(25\\%\\) more than an integer. What is the smallest possible value of \\(N\\)?',
+    c:['5','14','17','20','35'] },
+  { n:23,
+    t:'What is the units digit of \\(4^{2025}+6^{2025}\\)?',
+    c:['0','2','4','6','8'] },
+  { n:24,
+    t:'How many proper divisors does \\(6^{2024}\\) have? (A proper divisor excludes 1 and the number itself.)',
+    c:['4,092,527','4,092,529','4,096,576','4,096,578','4,100,623'] },
+  { n:25,
+    t:'A cube of side length 2 is inscribed in a sphere so that all 8 vertices touch the sphere. What is the radius of the sphere?',
+    c:['\\(\\sqrt{3}\\)','\\(\\dfrac{3+\\sqrt{2}}{2}\\)','\\(\\dfrac{5+\\sqrt{2}}{2}\\)','\\(1+\\sqrt{5}\\)','\\(2\\sqrt{3}\\)'],
+    note:'See the PDF for the figure.' },
+  { n:26,
+    t:'The ratio of deer to foxes in an enchanted forest is \\(4:3\\). If 20 deer leave, the ratio becomes \\(6:5\\). What is the sum of the digits of the total number of deer and foxes?',
+    c:['45','55','56','58','60'] },
+  { n:27,
+    t:'Compute \\(10^2-9^2+8^2-7^2+6^2-5^2+4^2-3^2+2^2-1^2\\).',
+    c:['45','55','56','58','60'] },
+  { n:28,
+    t:'Given \\(3x^2+2xy+3y^2=128\\) and \\(4x^2+2xy+4y^2=160\\) with \\(x,y>0\\), find \\(8x+8y\\).',
+    c:['56','\\(8\\tfrac{10}{3}\\)','3','\\(64\\tfrac{11}{3}\\)','72'] },
+  { n:29,
+    t:'In a regular pentagon, 2 distinct sides or diagonals are randomly selected and extended. What is the probability they will eventually intersect?',
+    c:['\\(\\dfrac{2}{3}\\)','\\(\\dfrac{7}{9}\\)','\\(\\dfrac{13}{15}\\)','\\(\\dfrac{8}{9}\\)','\\(\\dfrac{41}{45}\\)'] },
+  { n:30,
+    t:'A circle has one chord of length 10 and another of length 24. The distance between them is 7. Find the sum of all possible values of the radius.',
+    c:['13','13','14','\\(\\dfrac{11}{3}\\)','15'] }
+];
+
+/* ── Build DOM ── */
+function buildQuestions() {
+  const container = document.getElementById('q-container');
+  Qs.forEach(q => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + q.n;
+
+    const noteHTML = q.note
+      ? `<div class="q-note">&#128203; ${q.note}</div>` : '';
+
+    const choicesHTML = q.c.map((ch, i) => {
+      const ltr = LTRS[i];
+      return `<button class="choice-btn" id="cb-${q.n}-${ltr}"
+                onclick="pick(${q.n},'${ltr}')" type="button">
+                <span class="choice-ltr">${ltr.toUpperCase()}</span>
+                <span>${ch}</span>
+              </button>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-head">
+        <div class="q-num">${q.n}</div>
+        <div class="q-text">${q.t}${noteHTML}</div>
+      </div>
+      <div class="choices" id="ch-${q.n}">${choicesHTML}</div>
+      <div class="q-feedback" id="fb-${q.n}"></div>`;
+
+    container.appendChild(card);
+  });
+}
+
+/* ── Interaction ── */
+function pick(n, ltr) {
+  if (submitted) return;
+  picks[n] = ltr;
+  LTRS.forEach(l => {
+    const b = document.getElementById('cb-' + n + '-' + l);
+    if (b) b.classList.toggle('selected', l === ltr);
+  });
+  document.getElementById('card-' + n).classList.add('has-pick');
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(picks).length;
+  document.getElementById('prog-txt').textContent = count + ' / 30 answered';
+  document.getElementById('prog-fill').style.width = (count / 30 * 100) + '%';
+}
+
+/* ── Submit ── */
+function submitQuiz() {
+  submitted = true;
+  let score = 0;
+
+  Qs.forEach(q => {
+    const correct = KEY[q.n];
+    const chosen  = picks[q.n];
+    const card    = document.getElementById('card-' + q.n);
+    const fb      = document.getElementById('fb-' + q.n);
+
+    LTRS.forEach(l => {
+      const b = document.getElementById('cb-' + q.n + '-' + l);
+      if (b) b.disabled = true;
+    });
+
+    card.classList.remove('has-pick');
+
+    const correctBtn = document.getElementById('cb-' + q.n + '-' + correct);
+
+    if (!chosen) {
+      card.classList.add('wrong');
+      if (correctBtn) correctBtn.classList.add('is-correct');
+      fb.className = 'q-feedback show fb-skip';
+      fb.textContent = '— Not answered · correct answer: ' + correct.toUpperCase();
+    } else if (chosen === correct) {
+      score++;
+      card.classList.add('correct');
+      document.getElementById('cb-' + q.n + '-' + chosen).classList.add('is-correct');
+      fb.className = 'q-feedback show fb-ok';
+      fb.textContent = '✓ Correct!';
+    } else {
+      card.classList.add('wrong');
+      document.getElementById('cb-' + q.n + '-' + chosen).classList.add('is-wrong');
+      if (correctBtn) correctBtn.classList.add('is-correct');
+      fb.className = 'q-feedback show fb-bad';
+      fb.textContent = '✗ Incorrect · correct answer: ' + correct.toUpperCase();
+    }
+  });
+
+  showResults(score);
+
+  document.getElementById('btn-submit').disabled = true;
+  document.getElementById('btn-submit').textContent = 'Submitted ✓';
+  document.getElementById('btn-reset').classList.add('show');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Results ring ── */
+function showResults(score) {
+  const panel = document.getElementById('results');
+  panel.classList.add('show');
+  document.getElementById('ring-score').textContent = score;
+
+  const pct  = score / 30;
+  const circ = 2 * Math.PI * 57; // ≈ 358.1
+  const ring = document.getElementById('ring-fg');
+
+  ring.style.stroke = pct >= .8 ? '#16A34A' : pct >= .5 ? '#D97706' : '#DC2626';
+
+  setTimeout(() => {
+    ring.style.strokeDashoffset = circ * (1 - pct);
+  }, 80);
+
+  const levels = [
+    [28, '🏆 Outstanding!',  'You absolutely crushed this mock.'],
+    [24, '🌟 Excellent!',    'That\'s a very strong performance.'],
+    [20, '👍 Great job!',    'Solid work throughout.'],
+    [15, '📚 Good effort!',  'Keep practicing — you\'re getting there.'],
+    [0,  '💪 Keep going!',   'Every attempt makes you stronger.'],
+  ];
+  const [, headline, sub] = levels.find(([min]) => score >= min);
+  document.getElementById('res-headline').textContent = headline + '  ' + score + ' / 30';
+  document.getElementById('res-sub').textContent = sub;
+}
+
+/* ── Reset ── */
+function resetQuiz() {
+  picks = {};
+  submitted = false;
+
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('ring-fg').style.strokeDashoffset = '358.1';
+  document.getElementById('ring-score').textContent = '0';
+  document.getElementById('res-headline').textContent = 'Results';
+  document.getElementById('res-sub').textContent = '';
+
+  Qs.forEach(q => {
+    const card = document.getElementById('card-' + q.n);
+    card.classList.remove('correct', 'wrong', 'has-pick');
+    const fb = document.getElementById('fb-' + q.n);
+    fb.className = 'q-feedback';
+    fb.textContent = '';
+    LTRS.forEach(l => {
+      const b = document.getElementById('cb-' + q.n + '-' + l);
+      if (!b) return;
+      b.disabled = false;
+      b.classList.remove('selected', 'is-correct', 'is-wrong');
+    });
+  });
+
+  const sub = document.getElementById('btn-submit');
+  sub.disabled = false;
+  sub.textContent = 'Submit Answers';
+  document.getElementById('btn-reset').classList.remove('show');
+
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Init ── */
+buildQuestions();
+renderMathInElement(document.body, {
+  delimiters: [
+    { left: '\\(', right: '\\)', display: false },
+    { left: '\\[', right: '\\]', display: true  }
+  ],
+  throwOnError: false
+});
+</script>
+</body>
+</html>
